@@ -1,0 +1,21 @@
+POST http://localhost:8080/artist/save
+Content-Type: application/json
+
+{
+  "firstName": "Michael",
+  "lastName": "Jackson"
+}
+
+###
+
+POST http://localhost:8080/artist/save
+Content-Type: application/json
+
+{
+  "firstName": "Ed",
+  "lastName": "Sheeran"
+}
+
+###
+
+GET http://localhost:8080/artist/get/all
