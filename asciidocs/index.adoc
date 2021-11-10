@@ -1,0 +1,25 @@
+= MyMusic 4AHIF
+Darius Pavelescu
+1.0.0, 2021-11-10: Initial Creation
+ifndef::imagesdir[:imagesdir: images]
+:sourcedir: ../backend/src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Erklärung für die Anwendung
+
+MyMusic verwaltet Lieder.
+
+== Datenmodell
+
+[plantuml,cld_hotelbetrieb,png]
+----
+include::plantuml/cld_mymusic.puml[]
+----
