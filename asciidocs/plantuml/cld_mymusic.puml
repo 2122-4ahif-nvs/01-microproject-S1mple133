@@ -1,7 +1,35 @@
 @startuml
-
 class Song {
+    - name: String
+    - duration: int
+    - album: Album
+    - genre: Genre
+}
+note right: duration: seconds
 
+class SongSinger {
+    - song: Song
+    - artist: Artist
 }
 
+class Artist {
+    - firstName: String
+    - secondName: String
+}
+
+class Album {
+    - name: String
+    - image: byte[]
+    - publicationDate: LocalDateTime
+}
+
+class Genre {
+    - name: String
+    - aliases: List<string>
+}
+
+Song "1" -- "*" SongSinger
+SongSinger "*" -- "1" Artist
+Song "*" -right- "1" Album
+Song "*" -left- "1" Genre
 @enduml

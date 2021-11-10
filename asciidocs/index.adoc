@@ -15,7 +15,7 @@ ifdef::backend-html5[]
 
 == Erklärung für die Anwendung
 
-MyMusic verwaltet Lieder.
+MyMusic ist eine Webseite, auf der man sich seine Lieblingslieder, Alben und Künstler anschauen bzw merken kann.
 
 == Datenmodell
 
