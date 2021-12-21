@@ -7,13 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "mm_artist")
-@NamedQueries(
-        @NamedQuery(name = "Artist.findAll", query = "select a from Artist a")
-)
 public class Artist extends PanacheEntityBase {
-    @Column(name = "a_firstname")
+    @Column(name = "a_firstname", nullable = false)
     String firstName;
-    @Column(name = "a_lastname")
+    @Column(name = "a_lastname", nullable = false)
     String lastName;
 
     @Id @Column(name="a_id") @GeneratedValue(strategy = GenerationType.IDENTITY)

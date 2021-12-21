@@ -28,6 +28,6 @@ public class ArtistResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllArtists() {
-        return Response.ok(artistRepository.findAll().stream().toList()).build();
+        return Response.ok(artistRepository.findAll().stream().toArray()).build();
     }
 }
