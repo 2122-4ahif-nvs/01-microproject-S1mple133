@@ -13,8 +13,8 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./db-postgres/db:/var/lib/postgresql/data
-      - ./db-postgres/import:/import
+      - postgres_db:/var/lib/postgresql/data
+      - postgres_import:/import
     networks:
       - postgres
 
@@ -43,3 +43,9 @@ services:
 networks:
   postgres:
     driver: bridge
+
+volumes:
+  postgres_db:
+    external: false
+  postgres_import:
+    external: false
