@@ -21,13 +21,21 @@ class Album {
     - name: String
     - image: byte[]
     - publicationDate: LocalDateTime
+    - artist: Artist
 }
 
 class Genre {
     - name: String
-    - aliases: List<string>
+    - aliases: List<GenreAlias>
+}
+note left: aliases: Bi-Directional association
+
+class GenreAlias {
+    - genre: Genre
+    - alias: String
 }
 
+Genre "1" -- "*" GenreAlias
 Song "1" -- "*" SongSinger
 SongSinger "*" -- "1" Artist
 Song "*" -right- "1" Album
