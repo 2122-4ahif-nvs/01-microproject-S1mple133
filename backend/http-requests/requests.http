@@ -6,16 +6,37 @@ Content-Type: application/json
   "lastName": "Jackson"
 }
 
-###
-
-POST http://localhost:8080/artist/save
-Content-Type: application/json
-
-{
-  "firstName": "Ed",
-  "lastName": "Sheeran"
-}
+> {% client.global.set("artist_id", response.body.id); %}
 
 ###
 
 GET http://localhost:8080/artist/all
+
+###
+
+POST http://localhost:8080/album/save
+Content-Type: application/json
+
+{
+  "name": "Last Christmas - Single",
+  "publicationDate": "1990-04-14 10:00:00",
+  "artistId" : {{artist_id}}
+}
+
+###
+
+GET http://localhost:8080/album/all
+
+###
+
+POST http://localhost:8080/genre/save
+Content-Type: application/json
+
+{
+  "name": "HipHop",
+  "aliases" : ["Trap", "Rap"]
+}
+
+###
+
+GET http://localhost:8080/genre/all
