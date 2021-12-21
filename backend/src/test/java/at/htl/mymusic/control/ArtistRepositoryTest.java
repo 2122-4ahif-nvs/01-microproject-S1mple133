@@ -20,7 +20,9 @@ class ArtistRepositoryTest {
 
     @Test
     void testAdd() {
-        Artist testArtist = artistRepository.save(new Artist("First", "Last"));
+        Artist testArtist = new Artist("First", "Last");
+
+        artistRepository.persist(testArtist);
 
         Table artists = new Table(dataSource, "mm_artist");
 

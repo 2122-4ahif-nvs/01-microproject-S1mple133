@@ -18,4 +18,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/artist/get/all
+GET http://localhost:8080/artist/all

@@ -1,5 +1,8 @@
 package at.htl.mymusic.entity;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +10,7 @@ import javax.persistence.*;
 @NamedQueries(
         @NamedQuery(name = "Artist.findAll", query = "select a from Artist a")
 )
-public class Artist {
+public class Artist extends PanacheEntityBase {
     @Column(name = "a_firstname")
     String firstName;
     @Column(name = "a_lastname")
