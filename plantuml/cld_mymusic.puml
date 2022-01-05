@@ -1,0 +1,43 @@
+@startuml
+class Song {
+    - name: String
+    - duration: int
+    - album: Album
+    - genre: Genre
+}
+note right: duration: seconds
+
+class SongSinger {
+    - song: Song
+    - artist: Artist
+}
+
+class Artist {
+    - firstName: String
+    - secondName: String
+}
+
+class Album {
+    - name: String
+    - image: byte[]
+    - publicationDate: LocalDateTime
+    - artist: Artist
+}
+
+class Genre {
+    - name: String
+    - aliases: List<GenreAlias>
+}
+note left: aliases: Bi-Directional association
+
+class GenreAlias {
+    - genre: Genre
+    - alias: String
+}
+
+Genre "1" -- "*" GenreAlias
+Song "1" -- "*" SongSinger
+SongSinger "*" -- "1" Artist
+Song "*" -right- "1" Album
+Song "*" -left- "1" Genre
+@enduml
