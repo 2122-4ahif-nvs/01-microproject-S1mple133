@@ -14,6 +14,10 @@ GET http://localhost:8080/artist/all
 
 ###
 
+GET http://localhost:8080/artist/get/{{artist_id}}
+
+###
+
 POST http://localhost:8080/album/save
 Content-Type: application/json
 
