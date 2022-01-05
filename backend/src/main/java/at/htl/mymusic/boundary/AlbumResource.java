@@ -1,12 +1,20 @@
 package at.htl.mymusic.boundary;
 
+import at.htl.mymusic.ArtistReply;
+import at.htl.mymusic.ArtistRequest;
+import at.htl.mymusic.ArtistSeeker;
+import at.htl.mymusic.boundary.grpc.ArtistService;
 import at.htl.mymusic.control.AlbumRepository;
 import at.htl.mymusic.control.ArtistRepository;
 import at.htl.mymusic.entity.Album;
 import at.htl.mymusic.entity.AlbumDTO;
+import io.quarkus.grpc.GrpcClient;
+import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
+import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +22,9 @@ import java.time.Duration;
 
 @Path("/album")
 public class AlbumResource {
+    @Inject
+    Validator validator;
+
     @Inject
     AlbumRepository albumRepository;
 
@@ -25,7 +36,7 @@ public class AlbumResource {
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response saveAlbum(AlbumDTO album) {
+    public Response saveAlbum(@Valid AlbumDTO album) {
         if(artistRepository.findById(album.artistId).await().atMost(Duration.ofMinutes(1)) == null) {
             return Response.noContent().build();
         }

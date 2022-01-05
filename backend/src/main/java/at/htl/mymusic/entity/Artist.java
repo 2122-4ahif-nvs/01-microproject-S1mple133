@@ -3,13 +3,16 @@ package at.htl.mymusic.entity;
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "mm_artist")
 public class Artist extends PanacheEntityBase {
     @Column(name = "a_firstname", nullable = false)
+    @NotBlank(message = "Artist first name may not be blank")
     String firstName;
     @Column(name = "a_lastname", nullable = false)
+    @NotBlank(message = "Artist last name may not be blank")
     String lastName;
 
     @Id @Column(name="a_id") @GeneratedValue(strategy = GenerationType.IDENTITY)

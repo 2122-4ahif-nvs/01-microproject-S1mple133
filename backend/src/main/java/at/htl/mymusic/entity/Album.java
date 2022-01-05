@@ -1,18 +1,20 @@
 package at.htl.mymusic.entity;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFilter;
+import at.htl.mymusic.control.validator.NoBadWord;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 @Entity
 @Table(name = "mm_album")
 public class Album extends PanacheEntityBase {
     @Column(name = "al_name", nullable = false)
+    @NotBlank(message = "Album name may not be blank")
+    @NoBadWord
     private String name;
 
     @Column(name = "al_img", nullable = true)
@@ -20,6 +22,7 @@ public class Album extends PanacheEntityBase {
 
     @Column(name = "al_publication_date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss")
+    @NotNull(message = "Publication Date may not be null")
     private LocalDateTime publicationDate;
 
     @ManyToOne(cascade = CascadeType.ALL) @JoinColumn(name = "al_artist", nullable = true)
