@@ -23,3 +23,40 @@ MyMusic ist eine Webseite, auf der man sich seine Lieblingslieder, Alben und Kü
 ----
 include::plantuml/cld_mymusic.puml[]
 ----
+
+== Qute, Validierung und gRPC
+
+=== Qute
+
+Qute wurde im  Projekt eingebaut, eine graphische UI zu implementieren. Dadurch kann der Benutzer Alben mithilfe einer Webseite leicht einfügen.
+
+Alternativen: Angular
+
+Qute dient dazu, Daten auf webseiten anzuzeigen (den Frontend zu gestalten). Man kann z.B. leicht ein Template erstellen und ihm dann variablen übergeben, die im Browser angezeigt werden sollen.
+
+Mein QUTE-Template "artist" bekommt die variablen firstName und lastName und gibt sie dann als text aus.
+
+=== Validierung
+
+In Java erfolgt die validierung optimalerweise über Annotations. Man validiert Daten, um Fehler von den Nutzern einer Application zu vermeiden. (z.B. ein String statt ein integer anzugeben).
+
+Dafür habe ich im Album @NotNull und @NotBlank verwendet. Ich habe außerdem 2 eigene Validatoren erstellt.
+
+* @ExistingAuthor: wird vor einem Feld, in dem ein Author-ID gespeichert wird agegeben, um sicherzustellen dass der vom Benutzer eingegebene ID zu einem Autor dazugehört.
+
+* @NoBadWord: Stellt sicher, dass ein String kein bösartiges Wort ("shit", "lame") enthält.
+
+Alternativen: immer if-Bendingungen verwenden, verursacht aber viel code-verdopplung und ist nicht so sauber.
+
+=== gRPC
+
+gRPC erstellt ein Server, der anderen Programmen erlaubt, Funktionen in der eigenen Anwendung auszuführen.
+
+Damit kann man auf einem Server daten senden, ändern oder empfangen.
+
+Mein Projekt verwendet gRPC, um den Namen eines Artists zu bekommen wenn man nur sein ID kennt.
+
+Diese gRPC funktion liegt also hinter meinem `/artist/get/{id}` endpoint.
+
+Der Endpoint nimmt den ID-Parameter an, ruft die gRPC-Methode "getAuthor" mit dieser ID auf und hat als Rückgabewert eine "ArtistReply". Diese beinhaltet die Vor- und Nachname des Artists. Die Vor- und Nachname des Artists werden dann zum Template "artist" hinübergeschicht, die die Daten dann ausgibt.
+
