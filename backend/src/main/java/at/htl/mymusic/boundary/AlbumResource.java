@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Duration;
 
 @Path("/album")
 public class AlbumResource {
@@ -25,17 +26,17 @@ public class AlbumResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response saveAlbum(AlbumDTO album) {
-        if(!artistRepository.findByIdOptional(album.artistId).isPresent()) {
+        if(artistRepository.findById(album.artistId).await().atMost(Duration.ofMinutes(1)) == null) {
             return Response.noContent().build();
         }
 
         Album actAlbum = new Album(album.name,
                 album.image,
                 album.publicationDate,
-                artistRepository.findById(album.artistId)
+                artistRepository.findById(album.artistId).await().atMost(Duration.ofMinutes(1))
         );
 
-        albumRepository.persist(actAlbum);
+        actAlbum = albumRepository.persistAndFlush(actAlbum).await().indefinitely();
 
         return Response.ok(actAlbum).build();
     }
@@ -44,6 +45,6 @@ public class AlbumResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAlbums() {
-        return Response.ok(albumRepository.findAll().stream().toArray()).build();
+        return Response.ok(albumRepository.listAll().await().indefinitely()).build();
     }
 }

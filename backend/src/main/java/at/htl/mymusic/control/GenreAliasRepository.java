@@ -1,8 +1,7 @@
 package at.htl.mymusic.control;
 
 import at.htl.mymusic.entity.GenreAlias;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.hibernate.reactive.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 

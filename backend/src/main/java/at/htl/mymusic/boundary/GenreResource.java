@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,13 @@ public class GenreResource {
     public Response saveGenre(GenreDTO genreDTO) {
         Genre actGenre = new Genre(genreDTO.name, new ArrayList<>());
 
-        genreRepository.persist(actGenre);
+        actGenre = genreRepository.persistAndFlush(actGenre).await().indefinitely();
 
         for(String alias : genreDTO.aliases) {
-            System.out.println(alias);
             actGenre.getAliases().add(new GenreAlias(actGenre, alias));
         }
+
+        actGenre = genreRepository.persistAndFlush(actGenre).await().indefinitely(); // 2nd time to flush all genres
 
         return Response.ok(actGenre).build();
     }
@@ -42,6 +44,6 @@ public class GenreResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllGenres() {
-        return Response.ok(genreRepository.findAll().stream().toArray()).build();
+        return Response.ok(genreRepository.listAll().await().indefinitely()).build();
     }
 }

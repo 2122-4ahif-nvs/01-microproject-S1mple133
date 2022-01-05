@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Duration;
 
 @Path("/artist")
 public class ArtistResource {
@@ -20,7 +21,7 @@ public class ArtistResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response saveArtist(Artist artist) {
-        artistRepository.persist(artist);
+        artist = artistRepository.persistAndFlush(artist).await().indefinitely();
         return Response.ok(artist).build();
     }
 
@@ -28,6 +29,6 @@ public class ArtistResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllArtists() {
-        return Response.ok(artistRepository.findAll().stream().toArray()).build();
+        return Response.ok(artistRepository.listAll().await().indefinitely()).build();
     }
 }

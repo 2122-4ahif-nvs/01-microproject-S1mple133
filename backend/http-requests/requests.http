@@ -34,7 +34,10 @@ Content-Type: application/json
 
 {
   "name": "HipHop",
-  "aliases" : ["Trap", "Rap"]
+  "aliases": [
+    "Trap",
+    "Rap"
+  ]
 }
 
 ###
