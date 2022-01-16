@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@ApplicationScoped
 public class BadWordValidator implements ConstraintValidator<NoBadWord, String> {
     @Override
     public void initialize(NoBadWord constraintAnnotation) {

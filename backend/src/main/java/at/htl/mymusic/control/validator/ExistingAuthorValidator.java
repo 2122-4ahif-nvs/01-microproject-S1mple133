@@ -7,7 +7,8 @@ import javax.inject.Inject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class ExistingAuthorValidator implements ConstraintValidator<ExistingAuthor, Integer> {
+@ApplicationScoped
+public class ExistingAuthorValidator implements ConstraintValidator<ExistingAuthor, Long> {
     @Inject
     ArtistRepository repository;
 
@@ -17,7 +18,7 @@ public class ExistingAuthorValidator implements ConstraintValidator<ExistingAuth
     }
 
     @Override
-    public boolean isValid(Integer i, ConstraintValidatorContext constraintValidatorContext) {
-        return repository.findById((long) i).await().indefinitely() != null;
+    public boolean isValid(Long i, ConstraintValidatorContext constraintValidatorContext) {
+        return repository.findById( i).await().indefinitely() != null;
     }
 }
