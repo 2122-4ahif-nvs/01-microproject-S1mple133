@@ -9,6 +9,7 @@ import at.htl.mymusic.control.ArtistRepository;
 import at.htl.mymusic.entity.Album;
 import at.htl.mymusic.entity.AlbumDTO;
 import io.quarkus.grpc.GrpcClient;
+import io.quarkus.security.identity.SecurityIdentity;
 import io.smallrye.mutiny.Uni;
 
 import javax.inject.Inject;
@@ -31,12 +32,19 @@ public class AlbumResource {
     @Inject
     ArtistRepository artistRepository;
 
+    @Inject
+    SecurityIdentity securityIdentity;
+
     @Path("/save")
     @POST
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Response saveAlbum(@Valid AlbumDTO album) {
+        if(!securityIdentity.hasRole("Admin")) {
+            return Response.status(403).build();
+        }
+
         if(artistRepository.findById(album.artistId).await().atMost(Duration.ofMinutes(1)) == null) {
             return Response.noContent().build();
         }

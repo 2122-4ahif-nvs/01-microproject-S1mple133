@@ -1,6 +1,5 @@
 package at.htl.mymusic.boundary.grpc;
 
-import at.htl.mymusic.Artist;
 import at.htl.mymusic.ArtistReply;
 import at.htl.mymusic.ArtistRequest;
 import at.htl.mymusic.ArtistSeeker;

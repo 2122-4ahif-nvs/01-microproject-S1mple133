@@ -6,16 +6,48 @@ Content-Type: application/json
   "lastName": "Jackson"
 }
 
-> {% client.global.set("artist_id", response.body.id); %}
+> {% client.global.set("artist_id", response.body.id);
+
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
 
 ###
 
 GET http://localhost:8080/artist/all
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
 ###
 
 GET http://localhost:8080/artist/get/{{artist_id}}
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+###
+
+POST http://localhost:8080/album/save
+Content-Type: application/json
+Authorization: Basic admin password
+
+{
+  "name": "Last Christmas - Single",
+  "publicationDate": "1990-04-14 10:00:00",
+  "artistId" : {{artist_id}}
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
 ###
 
 POST http://localhost:8080/album/save
@@ -27,10 +59,20 @@ Content-Type: application/json
   "artistId" : {{artist_id}}
 }
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 403, "Response status is not 200");
+});
+%}
 ###
 
 GET http://localhost:8080/album/all
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
 ###
 
 POST http://localhost:8080/genre/save
@@ -44,6 +86,18 @@ Content-Type: application/json
   ]
 }
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
 ###
 
 GET http://localhost:8080/genre/all
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
